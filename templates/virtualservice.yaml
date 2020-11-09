@@ -1,0 +1,19 @@
+{{- if .Values.gateway.enabled -}}
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name:  {{- include "apigw-mocks.fullname" . | nindent 4 }}
+spec:
+  {{- range .Values.gateway.hosts }}
+  hosts:
+  - host: {{ .host | quote }}
+  {{- end }}
+  gateways:
+  - {{- include "apigw-mocks.fullname" . | nindent 4 }}
+  http:
+  - route:
+    - destination:
+        host: {{ include "apigw-mocks.fullname" . }}
+        port:
+          number: {{ .Values.service.port }}
+{{- end }}

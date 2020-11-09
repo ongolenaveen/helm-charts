@@ -1,0 +1,35 @@
+# Default values for apigw-mocks.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: defaultrepopath/test
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "imagetag"
+
+nameOverride: ""
+fullnameOverride: "default-stubs"
+podAnnotations: { mock.service: default-stubs }
+
+service:
+  enabled: true
+  port: 9008
+
+gateway:
+  enabled: true
+  annotations: { mock.service: default-stubs }
+  hosts:
+    - host: naveenpapisetty.devops.com
+  port: 80
+
+resources: {}
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+

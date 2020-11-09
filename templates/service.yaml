@@ -1,0 +1,15 @@
+{{- if .Values.service.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "apigw-mocks.fullname" . }}
+  labels:
+    {{- include "apigw-mocks.labels" . | nindent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      name: http
+  selector:
+    {{- include "apigw-mocks.selectorLabels" . | nindent 4 }}
+{{- end }}

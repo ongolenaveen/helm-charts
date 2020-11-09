@@ -1,0 +1,8 @@
+1. Get the application URL by running these commands:
+{{- if .Values.gateway.enabled }}
+{{- range $host := .Values.gateway.hosts }}
+  {{- range .paths }}
+  http{{ if $.Values.gateway.tls }}s{{ end }}://{{ $host.host }}{{ . }}
+  {{- end }}
+{{- end }}
+{{- end }}
